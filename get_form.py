@@ -1,6 +1,7 @@
 # form_id: 1GEsjWKisZGbfpLPsnhQ7Wdx6IdkU706cC6k3sNVClKw
 from pprint import pprint
-from apiclient import discovery
+# from apiclient import discovery
+from googleapiclient import discovery
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -22,10 +23,10 @@ form_service = discovery.build(
     static_discovery=False,
 )
 
-formId = "1GEsjWKisZGbfpLPsnhQ7Wdx6IdkU706cC6k3sNVClKw"
+# formId = "1GEsjWKisZGbfpLPsnhQ7Wdx6IdkU706cC6k3sNVClKw"
+formId = "181e34uJxqn68Mm4uBc4p8r_kSPUMuj3kDTrrzZaNBgU"
 
 # Prints the result to show the question has been added
 get_result = form_service.forms().get(formId=formId).execute()
-pprint(get_result)
+pprint(get_result['items'])
 print('\n')
-#pprint(get_result['items'])
