@@ -1,37 +1,88 @@
-import kivy
+# import kivy
 # from kivy.app import App
 from kivy.lang import Builder
 from kivymd.app import MDApp
-
+from kivymd.uix.button import MDIconButton
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
+from kivymd.theming import ThemeManager
+
+from kivy.factory import Factory
+
+#####
+from pprint import pprint
+import re
+from googleapiclient import discovery
+from httplib2 import Http
+from oauth2client.service_account import ServiceAccountCredentials
 
 
-Window.size = (350, 580)
-# Window.clearcolor = (1, 1, 1, 1)
-
-
-class LoginWindow(Screen): # Login
+class LoginScreen(Screen): # Login
     pass
 
 
-class MainWindow(Screen): # Login
+class RegisterScreen(Screen): # Register
     pass
 
 
-class DescargarWindow(Screen):
+class PrincipalScreen(Screen): # Main
+    pass
+
+class CrearScreen(Screen):
+    def form(self):
+        # text = self.ids.token_form.text
+        text = self.ids.form_id.text
+        url = text
+        # print(f"TEST: {url}")
+        
+        pattern = r"/d/([a-zA-Z0-9_-]+)"
+        match = re.search(pattern, url) 
+
+        if match:
+            form_id = match.group(1)
+            print(form_id)
+        else:
+            print("No match found.")
+
+        SCOPES = "https://www.googleapis.com/auth/forms.body"
+        DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
+
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            'credentials.json',
+            SCOPES
+        )
+
+        http=creds.authorize(Http())
+        form_service = discovery.build(
+            "forms",
+            "v1",
+            http=http,
+            discoveryServiceUrl=DISCOVERY_DOC,
+            static_discovery=False,
+        )
+
+        # # formId = "1GEsjWKisZGbfpLPsnhQ7Wdx6IdkU706cC6k3sNVClKw"
+        formId = form_id
+
+        # # Prints the result to show the question has been added
+        get_result = form_service.forms().get(formId=formId).execute()
+        pprint(get_result['items'])
+        print('\n')
+
+
+class DescargarScreen(Screen):
     pass
 
 
-class AplicarWindow(Screen):
+class AplicarScreen(Screen):
     pass
 
 
-class GenerarWindow(Screen):
+class GenerarScreen(Screen):
     pass
 
 
-class CerrarWindow(Screen):
+class CerrarScreen(Screen):
     pass
 
 
@@ -39,26 +90,28 @@ class WindowManager(ScreenManager): # Transistion btw the windows
     pass
 
 
-# kv = Builder.load_file("my.kv")
+class UI(Factory.ScreenManager):
+    Builder.load_file("layout.kv")
 
-
-class MyMainApp(MDApp):
+class Main(MDApp):
     title = 'Encuestas Digitales'
 
     def build(self):
         # self.root_widget = kv
-        self.theme_cls.theme_style = "Light"
-        self.theme_cls.primary_palette = "Indigo"
-        self.theme_cls.accent_palette = 'Blue'
-        return Builder.load_file("my.kv")
-    
-    
-    def navigation_draw(self):
-        print("navbar")
+                
+        sm = ScreenManager()
+        sm.add_widget(LoginScreen(name='login'))
+        sm.add_widget(RegisterScreen(name='register'))
+        sm.add_widget(PrincipalScreen(name='principal'))
+        sm.add_widget(CrearScreen(name='crear'))
+        sm.add_widget(DescargarScreen(name='descargar'))
+        sm.add_widget(AplicarScreen(name='aplicar'))
+        sm.add_widget(GenerarScreen(name='generar'))
+        return UI()
+        
+    # def navigation_draw(self):
+    #     print("navbar")
     
 
 if __name__ == "__main__":
-    MyMainApp().run()    
-
-# The kv file needs to be call the same way that the main class (i.g. MyApp -> My.kv)
-# pos_hint: {"x", "y", "top", "botton", "left", "right"}
+    Main().run()   

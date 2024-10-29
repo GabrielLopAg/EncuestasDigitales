@@ -1,0 +1,25 @@
+Manager:
+    LoginWindow:
+    RegisterWindow:
+    MainWindow:
+    AplicarWindow:
+    CrearWindow:
+    DescargarWindow:    
+    GenerarWindow:
+    CerrarWindow:
+
+
+<MainWindow>:
+    name: "Main"
+
+    MDNavigationLayout:
+        orientation: 'vertical'
+        
+        MDTopAppBar:
+            title: "Inicio"
+            size_hint_x: 1
+            pos_hint: {"top": 1}            
+            left_action_items: [["menu", lambda x: app.navigation_draw()]]                   
+            elevation: 10
+            on_action_button: app.callback_1(self.icon)
+            

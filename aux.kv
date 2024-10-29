@@ -1,0 +1,538 @@
+WindowManager:
+    LoginWindow:
+    RegisterWindow:
+    MainWindow:
+    AplicarWindow:
+    CrearWindow:
+    DescargarWindow:    
+    GenerarWindow:
+    CerrarWindow:
+
+
+<LoginWindow>:
+    name: "Login"
+
+    MDCard:
+        style: "elevated"
+        orientation: 'vertical'
+        pos_hint: {"center_x": .5, "center_y": .5}
+        
+        size_hint: None, None
+        size: "300dp", "300dp"    
+        radius: [20, 20, 20, 20]    
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            orientation: 'horizontal'
+            padding: [20, 10]
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.primary_color
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [20, 20, 0, 0]  # Rounded top corners
+
+            MDLabel:
+                text: "Iniciar sesión"
+                theme_text_color: 'Custom'
+                text_color: 1, 1, 1, 1
+                bold: True
+                halign: 'center'          
+        
+
+        MDTextField:
+            id: input_email
+            hint_text: "Correo electronico"
+            helper_text: ""
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}            
+            line_color_focus: 0,0,0,1
+            padding: 10
+            
+        MDTextField:
+            id: input_password
+            hint_text: "Contraseña"
+            helper_text: ""
+            pos_hint: {"center_x": 0.5, "center_y": 0.52}            
+            line_color_focus: 0,0,0,1
+            password: True
+            spacing: 10
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+            spacing: 20            
+            pos_hint: {"center_x": 0.5}
+
+            Widget: 
+
+            MDFillRoundFlatIconButton:
+                
+                text: "Iniciar sesión"
+                on_release: 
+                    app.root.current = "Main"
+                    root.manager.transition.direction = "left"  
+
+            MDFillRoundFlatIconButton:
+                
+                text: "Registrarse"
+                on_release: 
+                    app.root.current = "Register"
+                    root.manager.transition.direction = "left"  
+
+            Widget: 
+
+
+
+<RegisterWindow>:
+    name: "Register"
+
+    MDCard:
+        size_hint: None, None
+        size: 600, 900
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 50
+        spacing: 20
+        orientation: 'vertical'
+        adaptive_width: True
+
+        MDTextField:
+            id: input_email
+            hint_text: "Nombre(s)"
+            helper_text: ""
+            pos_hint: {"center_x": 0.5, "center_y": 0.52}
+
+            size_hint_x: 0.85
+            line_color_focus: 0,0,0,1
+
+
+        MDTextField:
+            id: input_password
+            hint_text: "Apellidos"
+            helper_text: ""
+            pos_hint: {"center_x": 0.5, "center_y": 0.52}
+
+            size_hint_x: 0.85
+            line_color_focus: 0,0,0,1
+            password: True
+        
+        
+        MDTextField:
+            id: input_email
+            hint_text: "Correo electronico"
+            helper_text: ""
+            pos_hint: {"center_x": 0.5, "center_y": 0.52}
+
+            size_hint_x: 0.85
+            line_color_focus: 0,0,0,1
+
+
+        MDTextField:
+            id: input_password
+            hint_text: "Contraseña"
+            helper_text: ""
+            pos_hint: {"center_x": 0.5, "center_y": 0.52}
+
+            size_hint_x: 0.85
+            line_color_focus: 0,0,0,1
+            password: True
+
+
+        MDFlatButton: 
+            text: "Registrar"
+            size_hint: .55, .08
+            pos_hint: {"center_x": 0.5, "center_y": 0.25}  
+
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "left"                              
+            
+
+
+
+<MainWindow>:
+    name: "Main"
+
+    MDNavigationLayout:
+        orientation: 'vertical'
+        
+        MDTopAppBar:
+            title: "Inicio"
+            size_hint_x: 1
+            pos_hint: {"top": 1}            
+            left_action_items: [["menu", lambda x: app.navigation_draw()]]                   
+            elevation: 10
+            on_action_button: app.callback_1(self.icon)
+            
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10,10
+        spacing: 10
+        pos_hint: {"center_x": .5, "center_y": 0.9}      
+        
+        MDCard:        
+            adaptive_height: True            
+            orientation: 'horizontal'     
+            spacing: dp(5)
+            size_hint: 0.9, None
+            md_bg_color: app.theme_cls.primary_color
+            padding: 5,5
+            elevation: 2
+            on_release: 
+                app.root.current = "Crear" 
+                root.manager.transition.direction = "left"
+            
+            MDIcon:
+                icon: "pencil-outline"                
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {"center_y": 0.5}
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True                 
+                spacing: dp(5)
+
+                MDLabel:
+                    text: "Crear encuestas"
+                    halign: 'left'
+                    theme_text_color: 'Primary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                
+                MDLabel:
+                    text: "Ingrese aqui para crear una nueva encuesta"
+                    halign: 'left'
+                    theme_text_color: 'Secondary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+            
+        
+        MDCard:            
+            adaptive_height: True            
+            orientation: 'horizontal'     
+            spacing: dp(5)
+            size_hint: 0.9, None
+            md_bg_color: app.theme_cls.primary_color
+            padding: 5,5
+            elevation: 2
+            on_release: 
+                app.root.current = "Descargar" 
+                root.manager.transition.direction = "left"
+            
+            MDIcon:
+                icon: "download"                
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {"center_y": 0.5}
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True                
+                spacing: dp(5)
+
+                MDLabel:
+                    text: "Descargar encuesta"
+                    halign: 'left'
+                    theme_text_color: 'Primary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                
+                MDLabel:
+                    text: "Ingrese aqui para descargar una encuesta y poder aplicarla sin necesidad de internet"
+                    halign: 'left'
+                    theme_text_color: 'Secondary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+
+        MDCard:            
+            adaptive_height: True            
+            orientation: 'horizontal'     
+            spacing: dp(5)
+            size_hint: 0.9, None
+            md_bg_color: app.theme_cls.primary_color
+            padding: 5,5
+            elevation: 2
+            on_release: 
+                app.root.current = "Aplicar" 
+                root.manager.transition.direction = "left"
+            
+            MDIcon:
+                icon: "account"               
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {"center_y": 0.5}
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True                
+                spacing: dp(5)
+
+                MDLabel:
+                    text: "Aplicar nueva encuesta"
+                    halign: 'left'
+                    theme_text_color: 'Primary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                
+                MDLabel:
+                    text: "Ingrese aqui para aplicar una encuesta previamente descargada"
+                    halign: 'left'
+                    theme_text_color: 'Secondary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+        
+        
+
+        MDCard:            
+            adaptive_height: True            
+            orientation: 'horizontal'     
+            spacing: dp(5)
+            size_hint: 0.9, None
+            md_bg_color: app.theme_cls.primary_color
+            padding: 5,5
+            elevation: 2
+            on_release: 
+                app.root.current = "Generar" 
+                root.manager.transition.direction = "left"
+            
+            MDIcon:
+                icon: "folder"            
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {"center_y": 0.5}
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True                
+                spacing: dp(5)
+
+                MDLabel:
+                    text: "Generar reportes"
+                    halign: 'left'
+                    theme_text_color: 'Primary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                
+                MDLabel:
+                    text: "Ingrese aqui para generar los reportes de las encuestas aplicadas"
+                    halign: 'left'
+                    theme_text_color: 'Secondary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+        
+        
+        MDCard:            
+            adaptive_height: True            
+            orientation: 'horizontal'     
+            spacing: dp(5)
+            size_hint: 0.9, None
+            md_bg_color: app.theme_cls.primary_color
+            padding: 5,5
+            elevation: 2
+            on_release: 
+                app.root.current = "Cerrar" 
+                root.manager.transition.direction = "left"
+            
+            MDIcon:
+                icon: "logout"          
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {"center_y": 0.5}
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True                
+                spacing: dp(5)                
+
+                MDLabel:
+                    text: "Cerrar sesión"
+                    halign: 'left'
+                    theme_text_color: 'Primary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                
+                MDLabel:
+                    text: "Ingrese aqui para cerrar la sesión de su cuenta"
+                    halign: 'left'
+                    theme_text_color: 'Secondary'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                                                                                    
+
+
+<AplicarWindow>:
+    name: "Aplicar"
+
+    MDNavigationLayout:
+        orientation: 'vertical'
+        
+        MDTopAppBar:
+            title: 'Encuestas disponibles'
+            left_action_items: [["menu", lambda x: app.navigation_draw()]]
+            pos_hint: {"top": 1}
+            elevation: 10
+            on_action_button: app.callback_1(self.icon)
+
+    GridLayout:
+        cols: 1
+        padding: 100,100
+        spacing: 10
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+
+
+        MDFillRoundFlatIconButton:
+            icon: "android"
+            text: "Cedula de evaluación"
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
+            size_hint: None, None
+            width: root.width*0.7 
+            
+
+
+        MDFillRoundFlatIconButton:
+            icon: "android"
+            text: "Encuesta de población"
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
+            size_hint: None, None
+            width: root.width*0.7 
+
+
+<CrearWindow>:
+    name: "Crear"
+
+    MDNavigationLayout:
+        orientation: 'vertical'
+        
+        MDTopAppBar:
+            title: 'Generar encuesta'
+            left_action_items: [["menu", lambda x: app.navigation_draw()]]
+            pos_hint: {"top": 1}
+            elevation: 10
+            on_action_button: app.callback_1(self.icon)
+
+    GridLayout:
+        cols: 1
+        padding: 100,100
+        spacing: 10
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+
+
+        MDTextField:
+            id: input_id_form
+            hint_text: "Id del formulario"
+            helper_text: ""
+            pos_hint: {"center_x": 0.5, "center_y": 0.52}
+            size_hint_x: 0.85
+            line_color_focus: 0,0,0,1
+
+        MDTextField:
+            id: input_password_form
+            hint_text: "Contraseña para el formulario"
+            helper_text: ""
+            pos_hint: {"center_x": 0.5, "center_y": 0.52}
+
+            size_hint_x: 0.85
+            line_color_focus: 0,0,0,1
+            password: True
+
+        MDFillRoundFlatIconButton:
+            icon: "android"
+            text: "Generar"
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
+            size_hint: None, None
+            width: root.width*0.7 
+
+
+<DescargarWindow>:
+    name: "Descargar"
+
+    MDNavigationLayout:
+        orientation: 'vertical'
+        
+        MDTopAppBar:
+            title: 'Encuestas disponibles'
+            left_action_items: [["menu", lambda x: app.navigation_draw()]]
+            pos_hint: {"top": 1}
+            elevation: 10
+            on_action_button: app.callback_1(self.icon)
+
+    GridLayout:
+        cols: 1
+        padding: 100,100
+        spacing: 10
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+
+
+        MDFillRoundFlatIconButton:
+            icon: "android"
+            text: "Cedula de evaluación"
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
+            size_hint: None, None
+            width: root.width*0.7 
+
+
+        MDFillRoundFlatIconButton:
+            icon: "android"
+            text: "Encuesta de población"
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
+            size_hint: None, None
+            width: root.width*0.7 
+
+    MDBoxLayout:
+        orientation: 'horizontal'
+        spacing: 10
+        padding: 10
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        MDFillRoundFlatIconButton:
+            icon: "android"
+            text: "Descargar"
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
+            size_hint: None, None
+            width: root.width*0.4
+            
+        MDFillRoundFlatIconButton:
+            icon: "android"
+            text: "Eliminar"
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
+            size_hint: None, None
+            width: root.width*0.4
+
+        
+
+<GenerarWindow>:
+    name: "Generar"
+    
+
+
+<CerrarWindow>:
+    name: "Cerrar"
+
+    GridLayout:
+        cols: 1
+        padding: 150,100
+        spacing: 10
+
+        Button:
+            text: "Go back 4"
+            on_release: 
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
