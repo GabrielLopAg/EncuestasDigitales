@@ -368,6 +368,9 @@
             spacing: dp(5)      
             padding: 5,5
             elevation: 2
+            on_release: 
+                root.manager.current = "login"
+                root.manager.transition.direction = "right"
             
             MDIcon:
                 icon: "logout"          
