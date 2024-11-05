@@ -45,11 +45,11 @@ class Live(App, MDApp):
 
 
     def build_app(self):
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Blue"
+        self.theme_cls.theme_style = "Light"
+        self.theme_cls.primary_palette = "Black"
         self.theme_cls.accent_palette = 'Blue'
         return Factory.UI()
-    
+     
     
     # def navigation_draw(self):
     #     print("navbar")

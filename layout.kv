@@ -11,6 +11,7 @@
         size: "300dp", "300dp"   
         radius: [20, 20, 20, 20]   
         spacing: 15
+        padding: 15
 
 
         MDBoxLayout:
@@ -27,7 +28,6 @@
             MDLabel:
                 text: "Iniciar sesión"
                 theme_text_color: 'Custom'
-                text_color: 1, 1, 1, 1
                 bold: True
                 halign: 'center' 
                 
@@ -41,6 +41,10 @@
                 id: input_email
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}            
                 line_color_focus: 0,0,0,1
+                
+                MDTextFieldLeadingIcon:
+                    icon: "email"                            
+                
 
                 MDTextFieldHintText:
                     text: "Correo electronico"
@@ -48,8 +52,11 @@
             MDTextField:
                 id: input_password
                 pos_hint: {"center_x": 0.5, "center_y": 0.52}            
-                line_color_focus: 0,0,0,1
-                password: True          
+                line_color_focus: 0,0,0,1                
+                password: True       
+
+                MDTextFieldLeadingIcon:
+                    icon: "lock"   
 
                 MDTextFieldHintText:
                     text: "Contraseña"  
@@ -82,86 +89,104 @@
 
                 
                     
-<RegisterScreen>:    
+<RegisterScreen>: 
+    MDBoxLayout:        
+        md_bg_color: self.theme_cls.backgroundColor   
     
-    MDCard:
-        size_hint: None, None        
-        size: "300dp", "400dp"
-        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-        elevation: 10
-        padding: 50
-        spacing: 20
+    MDCard:        
+        style: "elevated"
         orientation: 'vertical'
+        pos_hint: {"center_x": .5, "center_y": .5}        
+        size_hint: None, None
+        size: "300dp", "400dp"   
+        radius: [20, 20, 20, 20]       
+        padding: 15    
 
-        BoxLayout:
+        MDBoxLayout:
             size_hint_y: None
             height: dp(40)
-            orientation: 'horizontal'
-            padding: [20, 10]
-            canvas.before:
+            orientation: 'horizontal'            
 
+            canvas.before:
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
                     radius: [20, 20, 0, 0]  # Rounded top corners
 
             MDLabel:
-                text: "Registro"
-                theme_text_color: 'Custom'
-                text_color: 1, 1, 1, 1
+                text: "Registro de nuevo usuario"
+                theme_text_color: 'Primary'
                 bold: True
                 halign: 'center' 
-        
+                
 
-        MDTextField:
-            id: input_nombre
-            hint_text: "Nombre(s)"
-            helper_text: ""
-            pos_hint: {"center_x": 0.5, "center_y": 0.52}
-
-            size_hint_x: 0.85
-            line_color_focus: 0,0,0,1
-
-        MDTextField:
-            id: input_apellidos
-            hint_text: "Apellidos"
-            helper_text: ""
-            pos_hint: {"center_x": 0.5, "center_y": 0.52}
-            size_hint_x: 0.85
-            line_color_focus: 0,0,0,1            
-
-
-        MDTextField:
-            id: input_email
-            hint_text: "Correo electronico"
-            helper_text: ""
-            pos_hint: {"center_x": 0.5, "center_y": 0.52}
-            size_hint_x: 0.85
-            line_color_focus: 0,0,0,1
-
-
-        MDTextField:
-            id: input_password
-            hint_text: "Contraseña"
-            helper_text: ""
-            pos_hint: {"center_x": 0.5, "center_y": 0.52}
-            size_hint_x: 0.85
-            line_color_focus: 0,0,0,1
-            password: True
-
-
-        MDButton: 
-            pos_hint: {"center_x": 0.5}
-            on_press: 
-                root.manager.current = 'register'                
-                root.manager.transition.direction = "left"   
-
-            MDButtonIcon:
-                icon: "plus"
+        MDBoxLayout:        
+            orientation: 'vertical'
+            padding: 50 
+            spacing: 20
             
-            MDButtonText:
-                text: "Registrarse"
-                text_color: "red"
+
+            MDTextField:
+                id: input_nombre
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}            
+                line_color_focus: 0,0,0,1
+                
+                MDTextFieldLeadingIcon:
+                    icon: "account"                            
+                
+                MDTextFieldHintText:
+                    text: "Nombre(s)"
+
+            MDTextField:
+                id: input_apellido
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}            
+                line_color_focus: 0,0,0,1
+                
+                MDTextFieldLeadingIcon:
+                    icon: "account"                            
+                
+                MDTextFieldHintText:
+                    text: "Apellidos"
+
+            MDTextField:
+                id: input_email
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}            
+                line_color_focus: 0,0,0,1
+                
+                MDTextFieldLeadingIcon:
+                    icon: "email"                            
+                
+                MDTextFieldHintText:
+                    text: "Correo electronico"
+                
+            MDTextField:
+                id: input_password
+                pos_hint: {"center_x": 0.5, "center_y": 0.52}            
+                line_color_focus: 0,0,0,1                
+                password: True       
+
+                MDTextFieldLeadingIcon:
+                    icon: "lock"   
+
+                MDTextFieldHintText:
+                    text: "Contraseña"
+
+
+            MDBoxLayout:
+                size_hint_y: None
+                orientation: 'horizontal'
+                spacing: 15     
+                pos_hint: {"center_x": 0.5, "center_y": 1}
+
+                AnchorLayout:
+                    MDButton:
+                        on_press: 
+                            root.manager.current = 'principal'                
+                            root.manager.transition.direction = "left"
+                        
+                        MDButtonText:
+                            text: "Registrar"
+                            text_color: "red"   
 
         
 
@@ -424,7 +449,7 @@
                 MDButton:
                                
                     on_press: 
-                        root.manager.current = root.form()                                
+                        root.manager.current = root.dialog_text()                                
 
                     MDButtonIcon:
                         icon: "plus"
@@ -443,7 +468,6 @@
                     
                     MDButtonText:                
                         text: "Regresar"                    
-
 
 
 <DescargarScreen>:
@@ -580,7 +604,6 @@
 <GenerarScreen>:
     MDBoxLayout:        
         md_bg_color: self.theme_cls.backgroundColor
-
     
     MDScreen:
         md_bg_color: self.theme_cls.secondaryContainerColor

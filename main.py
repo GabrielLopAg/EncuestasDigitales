@@ -6,6 +6,10 @@ from kivymd.uix.button import MDIconButton
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivymd.theming import ThemeManager
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDButton, MDButtonText
+from kivymd.uix.dialog import MDDialog, MDDialogHeadlineText, MDDialogButtonContainer
+from kivy.uix.widget import Widget
 
 from kivy.factory import Factory
 
@@ -29,45 +33,76 @@ class PrincipalScreen(Screen): # Main
     pass
 
 class CrearScreen(Screen):
-    def form(self):
+    dialog = None
+
+    def dialog_text(self):
+        if not self.dialog:
+            MDDialog(
+                MDDialogHeadlineText(
+                    text="Discard draft?",
+                    halign="left",
+                ),
+                MDDialogButtonContainer(
+                    Widget(),
+                    MDButton(                        
+                        MDButtonText(text="Cancel"),
+                        style="text",
+                        on_press = self.close_dialog                    
+                    ),
+                    MDButton(
+                        MDButtonText(text="Discard"),
+                        style="text",
+                        on_press = self.form  
+                    ),
+                    spacing="8dp",
+                ),
+            ).open()
+
+    def close_dialog(self, obj):
+        if self.dialog:
+            self.dialog.dismiss()
+        
+    def form(self, obj):        
+        ### FORM LOGIC
+        print(f"TESTING: {self.ids.form_id.text}")
         # text = self.ids.token_form.text
-        text = self.ids.form_id.text
-        url = text
+        # text = self.ids.form_id.text
+        # url = text
         # print(f"TEST: {url}")
         
-        pattern = r"/d/([a-zA-Z0-9_-]+)"
-        match = re.search(pattern, url) 
+        # pattern = r"/d/([a-zA-Z0-9_-]+)"
+        # match = re.search(pattern, url) 
 
-        if match:
-            form_id = match.group(1)
-            print(form_id)
-        else:
-            print("No match found.")
+        # if match:
+        #     form_id = match.group(1)
+        #     print(form_id)
+        # else:
+        #     print("No match found.")
 
-        SCOPES = "https://www.googleapis.com/auth/forms.body"
-        DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
+        # SCOPES = "https://www.googleapis.com/auth/forms.body"
+        # DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 
-        creds = ServiceAccountCredentials.from_json_keyfile_name(
-            'credentials.json',
-            SCOPES
-        )
+        # creds = ServiceAccountCredentials.from_json_keyfile_name(
+        #     'credentials.json',
+        #     SCOPES
+        # )
 
-        http=creds.authorize(Http())
-        form_service = discovery.build(
-            "forms",
-            "v1",
-            http=http,
-            discoveryServiceUrl=DISCOVERY_DOC,
-            static_discovery=False,
-        )
+        # http=creds.authorize(Http())
+        # form_service = discovery.build(
+        #     "forms",
+        #     "v1",
+        #     http=http,
+        #     discoveryServiceUrl=DISCOVERY_DOC,
+        #     static_discovery=False,
+        # )
 
-        # # formId = "1GEsjWKisZGbfpLPsnhQ7Wdx6IdkU706cC6k3sNVClKw"
-        formId = form_id
+        # # # formId = "1GEsjWKisZGbfpLPsnhQ7Wdx6IdkU706cC6k3sNVClKw"
+        # formId = form_id
 
-        # # Prints the result to show the question has been added
-        get_result = form_service.forms().get(formId=formId).execute()
-        pprint(get_result['items'])
-        print('\n')
+        # # # Prints the result to show the question has been added
+        # get_result = form_service.forms().get(formId=formId).execute()
+        # pprint(get_result['items'])
+        # print('\n')
 
 
 class DescargarScreen(Screen):
@@ -114,4 +149,4 @@ class Main(MDApp):
     
 
 if __name__ == "__main__":
-    Main().run()   
+    Main().run()    
