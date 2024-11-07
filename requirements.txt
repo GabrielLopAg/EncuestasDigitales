@@ -33,6 +33,7 @@ pyasn1_modules==0.4.0
 pycparser==2.22
 PyDrive2==1.19.0
 Pygments==2.17.2
+pymongo==4.10.1
 pyOpenSSL==24.1.0
 pyparsing==3.1.2
 PyYAML==6.0.1
@@ -41,5 +42,4 @@ rsa==4.9
 six==1.16.0
 uritemplate==4.1.1
 urllib3==2.2.1
-virtualenv==20.25.0
 watchdog==4.0.1

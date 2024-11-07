@@ -20,6 +20,8 @@ from googleapiclient import discovery
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
 
+from form.get_form import get_token_form, call_forms_api as get_forms
+from form.simplify_form import save_simplify_form as save_form
 
 class LoginScreen(Screen): # Login
     pass
@@ -64,7 +66,9 @@ class CrearScreen(Screen):
         
     def form(self, obj):        
         ### FORM LOGIC
-        print(f"TESTING: {self.ids.form_id.text}")
+        token = get_token_form(self.ids.form_id.text)
+        print(save_form(get_forms(token)))
+        print(f"TESTING: {token}")
         # text = self.ids.token_form.text
         # text = self.ids.form_id.text
         # url = text

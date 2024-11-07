@@ -8,6 +8,9 @@ from kivy.factory import Factory
 
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
 Window.size = (500, 900)
 # Window.clearcolor = (1, 1, 1, 1)
 
