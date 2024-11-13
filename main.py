@@ -37,7 +37,10 @@ class RegisterScreen(Screen): # Register
             'password': self.ids.input_password.text,
             'type': 'encuestador'
         }
-        res = register_user(user)
+        try:
+            res = register_user(user)
+        except Exception as e:
+            print(e)
 
 
 class PrincipalScreen(Screen): # Main

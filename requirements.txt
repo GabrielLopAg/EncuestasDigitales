@@ -1,6 +1,7 @@
 apiclient==1.0.4
 asyncgui==0.6.3
 asynckivy==0.6.3
+bcrypt==4.2.0
 cachetools==5.3.3
 certifi==2024.2.2
 cffi==1.16.0
@@ -8,6 +9,7 @@ charset-normalizer==3.3.2
 cryptography==42.0.7
 distlib==0.3.8
 docutils==0.20.1
+email_validator==2.2.0
 exceptiongroup==1.2.2
 filelock==3.13.1
 google-api-core==2.19.0
