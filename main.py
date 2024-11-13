@@ -22,13 +22,22 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 from form.get_form import get_token_form, call_forms_api as get_forms
 from form.simplify_form import save_simplify_form as save_form
+from user.register import register_user
 
 class LoginScreen(Screen): # Login
     pass
 
 
 class RegisterScreen(Screen): # Register
-    pass
+    def register(self):
+        user = {
+            'name': self.ids.input_nombre.text,
+            'last_name': self.ids.input_apellido.text,
+            'email': self.ids.input_email.text,
+            'password': self.ids.input_password.text,
+            'type': 'encuestador'
+        }
+        res = register_user(user)
 
 
 class PrincipalScreen(Screen): # Main
